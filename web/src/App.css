@@ -1,0 +1,19 @@
+.card {
+  border-bottom: 1px solid;
+  margin-block: 10px;
+  padding: 0 20px 20px 20px;
+}
+
+.card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.repo-name {
+  cursor: pointer;
+}
+
+.card-readme-section {
+  margin-top: 50px;
+}
