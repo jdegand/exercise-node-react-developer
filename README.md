@@ -155,7 +155,8 @@ React client.
 - I prefer using fetch with .then() syntax although it is more verbose and you have to remember to check `response.ok`
 - Combining fetch and async/await can have pitfalls and not cover all error scenarios - [this article](https://gomakethings.com/error-handing-when-using-the-vanilla-js-fetch-method-with-async-and-await/) shows how convoluted it can get
 - Error handling is always a concern when you use fetch.
-- I used promise chaining for last commit details - I think that is preferable to async/await unless you have many sequential requests.
+- I used promise chaining for last commit details.  
+- I looked into promise chaining with async/await and it is just as easy as .then() syntax, however I am not as sure about its error handling. 
 - RepoDetail was doing too many things - split markdown fetch & last commit fetch into separate components.
 - This made it easier to implement a loading state for each component as well.  
 - I had problems with jsx where I could not wrap a Object.keys ternary with additional conditional rendering.  Splitting the components helped with this problem. 
@@ -165,6 +166,11 @@ React client.
 - I am not going to alter the local data file.
 - local data mismatch creates problems with typescript - need to either change endpoint response to send 2 arrays - one for github data and another for local data - then combine and sort the data in the repos component vs combining and sorting on the server
 - You could fetch commit data / markdown for the local json if silverorange had repos for them.  It seems intentional that those repos don't exist so you are forced to deal with errors.  
+- I cloned this repo and converted to react router 6.4 syntax. App component got the functionality of the Repos component.  App routing went into index.tsx.  
+- App component had a loader and RepoDetail component had a loader.  Problem in RepoDetail component where it would be beneficial to have two loaders versus using one loader with a Promise.all() request.  With a promise.all(), you can't return lastCommit / markdown when one request failed.  Can a component have multiple loaders ?  I don't think it can.  
+- When you click a link from RepoDetail to go back to home page, the App loader is fired again.  This creates a slow return to the homepage and wasteful api requests.   
+- Using the loaders and passing the return data from useRouterLoaderData as props to markdown / lastCommit components makes testing those components easier.  
+- The app can updated to React 18 with no real problems.  The index.tsx just has to be changed to use createRoot.  
 
 ## Improvements
 
