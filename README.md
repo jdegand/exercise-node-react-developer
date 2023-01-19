@@ -167,9 +167,10 @@ React client.
 - local data mismatch creates problems with typescript - need to either change endpoint response to send 2 arrays - one for github data and another for local data - then combine and sort the data in the repos component vs combining and sorting on the server
 - You could fetch commit data / markdown for the local json if silverorange had repos for them.  It seems intentional that those repos don't exist so you are forced to deal with errors.  
 - I cloned this repo and converted to react router 6.4 syntax. App component got the functionality of the Repos component.  App routing went into index.tsx.  
-- App component had a loader and RepoDetail component had a loader.  Problem in RepoDetail component where it would be beneficial to have two loaders versus using one loader with a Promise.all() request.  With a promise.all(), you can't return lastCommit / markdown when one request failed.  Can a component have multiple loaders ?  I don't think it can.  
-- When you click a link from RepoDetail to go back to home page, the App loader is fired again.  This creates a slow return to the homepage and wasteful api requests.   
-- Using the loaders and passing the return data from useRouterLoaderData as props to markdown / lastCommit components makes testing those components easier.  
+- App component had a loader and RepoDetail component had a loader.  In RepoDetail component, it would be beneficial to have two loaders versus using one loader with a Promise.all() request.  With a promise.all(), you can't return lastCommit / markdown when or if one request fails.
+- Using the loaders and passing the return data from useLoaderData as props to lastCommit / markdown components makes testing those components easier.    
+- Can a component have multiple loaders? I don't think you can add multiple loaders per route.
+- When you click a link from RepoDetail to go back to the home page, the App loader is fired again.  This creates a slow return to the homepage and wasteful api requests.   
 - The app can updated to React 18 with no real problems.  The index.tsx just has to be changed to use createRoot.  
 
 ## Improvements
@@ -226,3 +227,10 @@ React client.
 - [Stack Overflow](https://stackoverflow.com/questions/70220413/error-usehref-may-be-used-only-in-the-context-of-a-router-component-it-wor) - error usehref may be used only in the context of a router component
 - [Blog](https://tomalexhughes.com/blog/testing-components-that-use-react-router-hooks) - testing components that use react router hooks
 - [Stack Overflow](https://epicreact.dev/how-to-test-react-use-effect/) - how to test react useEffect
+- [YouTube](https://www.youtube.com/watch?v=z0vaVoxMoSA) - react router 6.4 
+- [Reddit](https://www.reddit.com/r/reactjs/comments/zj7gs8/reactrouter_v6_how_to_pass_props_to_elements_when/) - passing props router
+- [YouTube](https://www.youtube.com/watch?v=6xqh2f-sV6E) - fetch data with loaders
+- [Stack Overflow](https://stackoverflow.com/questions/73099788/react-router-index-route-not-showing-as-default) - index route not default
+- [Stack Overflow](https://stackoverflow.com/questions/74719956/can-i-handle-multiple-loaders-for-a-single-url-in-remix) - multiple loaders in remix
+- [Github](https://github.com/remix-run/react-router/discussions/9191) - lazy and loaders
+- [After Academy](https://afteracademy.com/blog/migrating-from-promise-chains-to-async-await/) - migrating from promise chains to async/await
