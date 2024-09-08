@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
 import { Router, Request, Response } from 'express';
-//import axios from 'axios';
 import fsPromise from 'fs/promises';
-//import fs from 'fs';
 import { Repo } from '../models/Repo';
 import axios from 'axios';
 
@@ -78,10 +76,3 @@ repos.get('/', async (_: Request, res: Response) => {
     res.json({ repos: [] });
   }
 });
-
-/*
-    fs.watch('data', (eventType: string, filename: string) => {
-      console.log('\nThe file', filename, 'was modified!');
-      console.log('The type of change was:', eventType);
-    });
-*/
